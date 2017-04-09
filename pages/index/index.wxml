@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<import src="../../lib/wxParse/wxParseCnBeta.wxml"/>
+<view class="container">
+    <view class="section section-tab-content tab-content-active">
+        <view class="info-list-box">
+
+            <block wx:if = "{{fetchingLatest}}">
+                <view class="preloader-loading">
+                    <view class="preloader-loading-bounce bounce-1"></view>
+                    <view class="preloader-loading-bounce bounce-2"></view>
+                    <view class="preloader-loading-bounce bounce-3"></view>
+                </view>
+            </block>
+            <block wx:if="{{emptyList}}">
+                <view class="text-empty-list">
+                    <text>无服务</text>
+                </view>
+            </block>
+
+            <block wx:for="{{newsList}}" wx:key="title" wx:for-item="article">
+                <view class="" data-id="{{article.id}}" bindtap="goToArticleDetail">
+                    <image src="{{article.pic}}" class="index-image"></image>
+                    <view class="main-title">{{article.title}}</view>
+                </view>
+            </block>
+        </view>
+    </view>
+
+</view>

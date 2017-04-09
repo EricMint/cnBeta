@@ -1,0 +1,17 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "unit-no-unknown": [
+      true,
+      "ignoreUnits": ["rpx"]
+    ],
+    "property-no-unknown": [
+      true,
+      "ignoreProperties": ["box-pack"]
+    ],
+    "selector-type-no-unknown": [
+      true,
+      "ignoreTypes": ["page", "swiper", "navigator"]
+    ]
+  }
+}

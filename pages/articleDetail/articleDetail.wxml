@@ -1,0 +1,31 @@
+<!--projectDetail.wxml-->
+<import src="../../lib/wxParse/wxParseCnBeta.wxml"/>
+<view class="container">
+    <view class="section-wrap">
+
+        <block wx:if="{{emptyList}}">
+            <view class="text-empty-list">
+                <text>暂无工序信息，请通知工程部经理操作工程排期</text>
+            </view>
+        </block>
+
+        <view class="section section-tab-content tab-content-active">
+            <view class="tab-content-head">
+                <block wx:if = "{{loading}}">
+                    <view class="preloader-loading">
+                        <view class="preloader-loading-bounce bounce-1"></view>
+                        <view class="preloader-loading-bounce bounce-2"></view>
+                        <view class="preloader-loading-bounce bounce-3"></view>
+                    </view>
+                </block>
+            </view>
+            <view class="tab-content-main">
+                <view class="info-text">{{articleInfo.title}}</view>
+            </view>
+            <view class="tab-content-main">
+                <view class="info-text">{{articleInfo.articleSumary}}</view>
+            </view>
+        </view>
+
+    </view>
+</view>

@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "globals": {
+    "App": true,
+    "Page": true,
+    "getApp": true,
+    "getCurrentPages": true
+  },
+  "rules": {
+    "no-unused-vars": ["error", { "varsIgnorePattern": "Promise|regeneratorRuntime" }]
+  }
+}

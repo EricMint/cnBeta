@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/articleDetail/articleDetail",
+    "pages/hotComment/hotComment"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "cnBeta",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon_index_list.png",
+        "selectedIconPath": "images/icon_index_list_HL.png",
+        "text": "资讯"
+      },
+      {
+        "pagePath": "pages/hotComment/hotComment",
+        "iconPath": "images/icon_hot_comments.png",
+        "selectedIconPath": "images/icon_hot_comments_HL.png",
+        "text": "热评"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 30000
+  }
+}
