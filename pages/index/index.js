@@ -5,6 +5,7 @@ const wx = require('../../lib/wx');
 const co = require('../../lib/co');
 const Api = require('../../utils/api.js');
 const WxParse = require('../../lib/wxParse/wxParse.js');
+const DOMParser = require('../../lib/xmldom/dom-parser.js').DOMParser;
 
 // 获取应用实例
 const app = getApp();
@@ -25,10 +26,34 @@ Page({
       fetchingLatest: true,
       emptyList: false,
     });
+    // var doc = new DOMParser().parseFromString(
+    //   '<xml xmlns="a" xmlns:c="./lite">\n' +
+    //   '\t<child>test</child>\n' +
+    //   '\t<child></child>\n' +
+    //   '\t<child/>\n' +
+    //   '</xml>'
+    //   , 'text/xml');
+    // doc.documentElement.setAttribute('x', 'y');
+    // doc.documentElement.setAttributeNS('./lite', 'c:x', 'y2');
+    // var nsAttr = doc.documentElement.getAttributeNS('./lite', 'x')
+    // console.info(nsAttr)
+    // console.info(doc)
+
+
     const res = yield wx.request({
       url: Api.getNewsList({}),
       method: 'GET',
     });
+
+    if (res.statusCode === 200 && res.data) {
+      let newsList = [];
+      const rawJson = new DOMParser().parseFromString(res.data, 'text/html');
+      var nsAttr = rawJson.documentElement.getElementsByTagName('body');
+      var nsAttr2 = rawJson.documentElement.getElementsByTagName('cnbeta-update').className;
+      console.log(rawJson);
+      console.log(nsAttr);
+      console.log(nsAttr2);
+    }
 
     if (res.statusCode === 200 && res.data) {
       let newsList = [];
