@@ -17,10 +17,13 @@
                 </view>
             </block>
 
-            <block wx:for="{{newsList}}" wx:key="title" wx:for-item="article">
-                <view class="" data-id="{{article.id}}" bindtap="goToArticleDetail">
-                    <image src="{{article.pic}}" class="index-image"></image>
-                    <view class="main-title">{{article.title}}</view>
+            <block wx:for="{{newsList}}" wx:key="title">
+                <view class="" data-id="{{item.id}}" bindtap="goToArticleDetail">
+                    <image src="{{item.img}}" class="index-image"></image>
+                    <view class="main-title">{{item.title}}</view>
+                    <view class="main-title">{{item.time}}</view>
+                    <view class="main-title">{{item.view_num}}阅读</view>
+                    <view class="main-title">{{item.comments}}评论</view>
                 </view>
             </block>
         </view>
