@@ -5,7 +5,7 @@
 
         <block wx:if="{{emptyList}}">
             <view class="text-empty-list">
-                <text>暂无工序信息，请通知工程部经理操作工程排期</text>
+                <text>暂无信息，请刷新</text>
             </view>
         </block>
 
@@ -21,6 +21,16 @@
             </view>
             <view class="tab-content-main">
                 <view class="info-text">{{articleInfo.title}}</view>
+                <view class="info-text">{{articleInfo.time}}</view>
+                <view class="info-text">{{articleInfo.topic}}</view>
+                <block wx:for="{{articleInfo.contents}}" wx:for-item="content">
+                    <block wx:if="{{content.text}}">
+                        <view class="info-text">{{content.text}}</view>
+                    </block>
+                    <block wx:if="{{content.img}}">
+                        <image src="{{content.img}}"></image>
+                    </block>
+                </block>
             </view>
             <view class="tab-content-main">
                 <view class="info-text">{{articleInfo.articleSumary}}</view>

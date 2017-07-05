@@ -18,7 +18,7 @@
             </block>
 
             <block wx:for="{{newsList}}" wx:key="title">
-                <view class="" data-id="{{item.id}}" bindtap="goToArticleDetail">
+                <view class="" data-id="{{item.id}}" data-classify="{{item.classify}}" bindtap="goToArticleDetail">
                     <image src="{{item.img}}" class="index-image"></image>
                     <view class="main-title">{{item.title}}</view>
                     <view class="main-title">{{item.time}}</view>

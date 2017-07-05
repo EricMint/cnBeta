@@ -9,27 +9,22 @@ const WxParse = require('../../lib/wxParse/wxParse.js');
 const app = getApp();
 Page({
   data: {
-    articleId: null,
+    classify: '',
+    id: null,
     articleInfo: {},
-    currentStageId: null,
-    tappedStageId: null,
-    tappedStageInfo: {},
     emptyArticle: false,
     loading: true,
   },
 
   // 获取阶段信息详情
-  getArticleDetail: function* getArticleDetail(articleId) {
+  getArticleDetail: function* getArticleDetail(classify, id) {
     const res = yield wx.request({
-      url: Api.getArticleDetail(articleId),
+      url: Api.getArticleDetail(classify, id),
       method: 'GET',
     });
 
-    if (res.statusCode === 200 && res.data) {
-      let articleInfo = {};
-      const rawJson = WxParse('html', res.data);
-      const rawArticle = this.getItem(rawJson);
-      articleInfo = this.formatItem(rawArticle);
+    if (res.statusCode === 200 && res.data && res.data.data) {
+      const articleInfo = res.data.data;
       this.setData({
         articleInfo,
         loading: false,
@@ -41,54 +36,12 @@ Page({
     return raw[0].child[1].child[1].child[0].child[1].child[0].child;
   },
 
-  formatItem: function (item) {
-    let formattedItem = {};
-    const article = item[0];
-    const comment = item[1];
-
-    const title = article.child[0].child[0].child[0].text;
-    const articleSumaryJson = article.child[1].child[0].child[1].child;
-    const articleSumary = this.formatItemText(articleSumaryJson);
-    // const articleContentJson = article.child[1].child[1].child;
-    // const itemDate = itemContent.child[2].child[0].child[0].text;
-    const author = article.child[2].child[0].child[0].text;
-
-
-    // const itemContent = item.child[0];
-    // const itemHotComment = itemInfo.child[0].child[0].attr.href;
-    // const itemId = this.getItemId(itemHref);
-    // const itemText = this.formatItemText(itemInfo.child[1].child[0].child);
-    // const itemPic = itemInfo.child[2].child[0].attr.src;
-    formattedItem.title = title;
-    formattedItem.articleSumary = articleSumary;
-    // formattedItem.id = itemId;
-    // formattedItem.text = itemText;
-    // formattedItem.pic = itemPic;
-    return formattedItem;
-  },
-
   formatItemText: function (textList) {
     let itemText = '';
     for (var i = 0; i < textList.length; i++) {
       if (textList[i].text) {
         itemText += textList[i].text;
       } else {
-        itemText += textList[i].child[0].text;
-      }
-    }
-
-    return itemText;
-  },
-
-  formatArticleContent: function (articleContent) {
-    let articleContentList = [];
-    for (let i = 0; i < articleContent.length; i++) {
-      const target = articleContent[i];
-      if (target.hasOwnProperty(tag) && target[tag]) {
-        let item = {};
-        item.type = 'img';
-        item.value = target.attr.src;
-      } else if (target.hasOwnProperty(tag) && target[tag]) {
         itemText += textList[i].child[0].text;
       }
     }
@@ -145,11 +98,13 @@ Page({
   }),
 
   onLoad: wxapp.handler(function* onLoad(next, options) {
-    const articleId = options.articleId;
-    if (articleId) {
-      yield this.getArticleDetail(articleId);
+    const classify = options.classify;
+    const id = options.id;
+    if (classify, id) {
+      yield this.getArticleDetail(classify, id);
       this.setData({
-        articleId,
+        classify,
+        id,
       });
     } else {
       this.setData({

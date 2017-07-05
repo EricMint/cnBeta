@@ -57,7 +57,7 @@ Page({
       gotFullList: false,
       loadingMore: true,
     });
-    const pageIndex = this.data.pageIndex;
+    const pageIndex = this.data.pageIndex + 1;
     const res = yield wx.request({
       url: Api.getNewsListFromSweetUI(pageIndex),
       method: 'GET',
@@ -71,6 +71,7 @@ Page({
         this.setData({
           loadingMore: false,
           newsList: newList,
+          pageIndex,
         });
       } else {
         this.setData({
@@ -85,8 +86,9 @@ Page({
   },
 
   goToArticleDetail: wxapp.handler(function* goToArticleDetail(next, e) {
-    const articleId = e.currentTarget.dataset.id;
-    const url = `../articleDetail/articleDetail?articleId=${articleId}`;
+    const id = e.currentTarget.dataset.id;
+    const classify = e.currentTarget.dataset.classify;
+    const url = `../articleDetail/articleDetail?classify=${classify}&id=${id}`;
     yield wx.navigateTo({
       url,
     });
