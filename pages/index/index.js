@@ -57,27 +57,20 @@ Page({
       gotFullList: false,
       loadingMore: true,
     });
+    const pageIndex = this.data.pageIndex;
     const res = yield wx.request({
-      url: Api.getProjectList({}),
+      url: Api.getNewsListFromSweetUI(pageIndex),
       method: 'GET',
-      header: app.generateRequestHeader(),
-      data: {
-        page_index: this.data.pageIndex,
-        page_size: this.data.pageSize,
-        project_stage: this.data.currentStage.value,
-      },
     });
 
-    if (res.statusCode === 200 && res.data) {
-      const nextProjects = res.data.projects || {};
-      if (nextProjects.length > 0) {
-        const pageData = this.data;
-        const currentProjects = pageData.projectStageMap.get(pageData.currentStage.name);
-        const newProjects = currentProjects.concat(nextProjects);
-        pageData.projectStageMap.set(pageData.currentStage.name, newProjects);
-        this.setStageProjects(pageData.currentStage);
+    if (res.statusCode === 200 && res.data && res.data.data) {
+      const nextList = res.data.data || [];
+      if (nextList.length > 0) {
+        const currentList = this.data.newsList;
+        const newList = currentList.concat(nextList);
         this.setData({
           loadingMore: false,
+          newsList: newList,
         });
       } else {
         this.setData({
