@@ -1,32 +1,28 @@
 <!--index.wxml-->
-<import src="../../lib/wxParse/wxParseCnBeta.wxml"/>
+<!--latest.wxml-->
 <view class="container">
-    <view class="section section-tab-content tab-content-active">
-        <view class="info-list-box">
-
-            <block wx:if = "{{fetchingLatest}}">
-                <view class="preloader-loading">
-                    <view class="preloader-loading-bounce bounce-1"></view>
-                    <view class="preloader-loading-bounce bounce-2"></view>
-                    <view class="preloader-loading-bounce bounce-3"></view>
+  <view class="topic-main">
+      <block wx:for="{{newsList}}" wx:key="title">
+        <view class="topic-item" index="{{index}}" data-id="{{item.id}}" catchtap="goToArticleDetail">
+            <image class="member-avatar" src="{{item.img}}" background-size="cover"></image>
+            <view class="topic-info">
+                <view class="topic-inner">
+                    <view class="topic-left">
+                        <view class="topic-title"><text>{{item.title}}</text></view>
+                        <view >
+                            <text class="node-name">{{item.classify}}</text>
+                            <text class="member-nickname">{{item.classify}}</text>
+                        </view>
+                    </view>
+                    <view class="reply-num">{{item.view_num}}</view>
+                    <view class="reply-num">{{item.comments}}</view>
                 </view>
-            </block>
-            <block wx:if="{{emptyList}}">
-                <view class="text-empty-list">
-                    <text>无服务</text>
-                </view>
-            </block>
-
-            <block wx:for="{{newsList}}" wx:key="title">
-                <view class="" data-id="{{item.id}}" data-classify="{{item.classify}}" bindtap="goToArticleDetail">
-                    <image src="{{item.img}}" class="index-image"></image>
-                    <view class="main-title">{{item.title}}</view>
-                    <view class="main-title">{{item.time}}</view>
-                    <view class="main-title">{{item.view_num}}阅读</view>
-                    <view class="main-title">{{item.comments}}评论</view>
-                </view>
-            </block>
+            </view>
         </view>
-    </view>
+      </block>
+  </view>
 
+  <loading hidden="{{!emptyList}}">
+    加载中...
+  </loading>
 </view>
