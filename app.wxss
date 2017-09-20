@@ -10,7 +10,7 @@ page {
   font-size: 32rpx;
   font-family: -apple-system-font, Helvetica, Neue, sans-serif;
   box-sizing: border-box;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 /* base */

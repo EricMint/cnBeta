@@ -20,23 +20,20 @@ Page({
   },
 
   fetchLatestData: function* fetchLatestData(stage) {
+    const pageIndex = 1;
     this.setData({
+      pageIndex,
       gotFullList: false,
       fetchingLatest: true,
       emptyList: false,
     });
-    const pageIndex = this.data.pageIndex;
-    const res = yield wx.request({
-      url: Api.getNewsListFromSweetUI(pageIndex),
-      method: 'GET',
-    });
-
-    if (res.statusCode === 200 && res.data && res.data.data) {
-      let newsList = res.data.data;
+    const newsList = yield this.getNewsListFromSweetUI(pageIndex);
+    if (newsList && newsList.length > 0) {
       console.log(newsList);
       this.setData({
         fetchingLatest: false,
         newsList,
+        pageIndex: pageIndex + 1,
       });
     } else {
       this.setData({
@@ -44,11 +41,19 @@ Page({
         emptyList: true,
       });
     }
-
   },
 
-  getItemList: function (itemList) {
-    return itemList[0].child[1].child[1].child[3].child[0].child[0].child[1].child;
+  // 获取新闻
+  getNewsListFromSweetUI: function* getNewsListFromSweetUI(pageIndex) {
+    const res = yield wx.request({
+      url: Api.getNewsListFromSweetUI(pageIndex),
+      method: 'GET',
+    });
+
+    if (res.statusCode === 200 && res.data && res.data.data) {
+      const newsList = res.data.data || [];
+      return newsList;
+    }
   },
 
   // 获取下一页客户列表数据
@@ -57,31 +62,24 @@ Page({
       gotFullList: false,
       loadingMore: true,
     });
-    const pageIndex = this.data.pageIndex + 1;
-    const res = yield wx.request({
-      url: Api.getNewsListFromSweetUI(pageIndex),
-      method: 'GET',
-    });
-
-    if (res.statusCode === 200 && res.data && res.data.data) {
-      const nextList = res.data.data || [];
-      if (nextList.length > 0) {
-        const currentList = this.data.newsList;
-        const newList = currentList.concat(nextList);
-        this.setData({
-          loadingMore: false,
-          newsList: newList,
-          pageIndex,
-        });
-      } else {
-        this.setData({
-          gotFullList: true,
-          loadingMore: false,
-        });
-        wx.showToast({
-          title: '加载完毕',
-        });
-      }
+    const pageIndex = this.data.pageIndex;
+    const newsList = yield this.getNewsListFromSweetUI(pageIndex);
+    if (newsList && newsList.length > 0) {
+      const currentList = this.data.newsList;
+      const nextList = currentList.concat(newsList);
+      this.setData({
+        loadingMore: false,
+        newsList: nextList,
+        pageIndex,
+      });
+    } else {
+      this.setData({
+        gotFullList: true,
+        loadingMore: false,
+      });
+      wx.showToast({
+        title: '加载完毕',
+      });
     }
   },
 
@@ -104,22 +102,25 @@ Page({
 
   // 页面底部上拉加载以获取下一页数据
   onReachBottom: wxapp.handler(function* onReachBottom(next) {
-    if (this.data.fetchingLatest) {
-      return;
-    }
-
-    this.setData({
-      pageIndex: this.data.pageIndex + 1,
-      loadingMore: !this.data.gotFullList,
-    });
-
-    if (!this.data.gotFullList) {
-      yield this.fetchDataOfNextPage();
-    } else {
-      wx.showToast({
-        title: '加载完毕',
-      });
-    }
+    yield this.fetchDataOfNextPage();
+    // console.log(this.data.fetchingLatest);
+    // if (this.data.fetchingLatest) {
+    //   return;
+    // }
+    //
+    // this.setData({
+    //   pageIndex: this.data.pageIndex + 1,
+    //   loadingMore: !this.data.gotFullList,
+    // });
+    //
+    // console.log(this.data.gotFullList);
+    // if (!this.data.gotFullList) {
+    //   yield this.fetchDataOfNextPage();
+    // } else {
+    //   wx.showToast({
+    //     title: '加载完毕',
+    //   });
+    // }
 
     yield next;
   }),

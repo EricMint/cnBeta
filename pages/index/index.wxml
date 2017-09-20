@@ -1,5 +1,4 @@
 <!--index.wxml-->
-<!--latest.wxml-->
 <view class="container">
   <view class="topic-main">
       <block wx:for="{{newsList}}" wx:key="title">
@@ -11,11 +10,11 @@
                         <view class="topic-title"><text>{{item.title}}</text></view>
                         <view >
                             <text class="node-name">{{item.classify}}</text>
-                            <text class="member-nickname">{{item.classify}}</text>
+                            <text class="member-nickname">{{item.time}}</text>
                         </view>
                     </view>
-                    <view class="reply-num">{{item.view_num}}</view>
-                    <view class="reply-num">{{item.comments}}</view>
+                    <view class="reply-num">{{item.view_num}}阅</view>
+                    <view class="reply-num">{{item.comments}}评</view>
                 </view>
             </view>
         </view>

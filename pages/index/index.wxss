@@ -31,7 +31,7 @@
   width: 128rpx;
   height: 128rpx;
   margin-right: 20rpx;
-  border-radius: 100%;
+  /*border-radius: 100%;*/
 }
 
 .topic-info {
@@ -67,9 +67,9 @@
 
 .reply-num {
     display: inline-block;
-    margin-left: 50rpx;
-    padding:10rpx;
-    height:22rpx;
+    margin-left: 5rpx;
+    padding:5rpx;
+    height:30rpx;
     background-color: #ddd;
     border-radius: 5rpx;
     color:#777;
