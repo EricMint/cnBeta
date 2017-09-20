@@ -1,41 +1,29 @@
 <!--projectDetail.wxml-->
-<import src="../../lib/wxParse/wxParseCnBeta.wxml"/>
-<view class="container">
-    <view class="section-wrap">
-
-        <block wx:if="{{emptyList}}">
-            <view class="text-empty-list">
-                <text>暂无信息，请刷新</text>
-            </view>
-        </block>
-
-        <view class="section section-tab-content tab-content-active">
-            <view class="tab-content-head">
-                <block wx:if = "{{loading}}">
-                    <view class="preloader-loading">
-                        <view class="preloader-loading-bounce bounce-1"></view>
-                        <view class="preloader-loading-bounce bounce-2"></view>
-                        <view class="preloader-loading-bounce bounce-3"></view>
-                    </view>
-                </block>
-            </view>
-            <view class="tab-content-main">
-                <view class="info-text">{{articleInfo.title}}</view>
-                <view class="info-text">{{articleInfo.time}}</view>
-                <view class="info-text">{{articleInfo.topic}}</view>
-                <block wx:for="{{articleInfo.contents}}" wx:for-item="content">
-                    <block wx:if="{{content.text}}">
-                        <view class="info-text">{{content.text}}</view>
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">{{articleInfo.title}}</view>
+        <text class="page__desc">{{articleInfo.time}}</text>
+        <text class="page__desc"> 阅读{{articleInfo.view_num}}</text>
+        <text class="page__desc"> 评论{{articleInfo.content_num}}</text>
+    </view>
+    <view class="page__bd">
+        <view class="weui-article">
+            <view class="weui-article__section">
+                <view class="weui-article__title"></view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">{{articleInfo.topic}}</view>
+                    <block wx:for="{{articleInfo.contents}}" wx:for-item="content">
+                        <block wx:if="{{content.text}}">
+                            <view class="weui-article__p">{{content.text}}</view>
+                        </block>
+                        <block wx:if="{{content.img}}">
+                            <view class="weui-article__p">
+                                <image class="weui-article__img" src="{{content.img}}" mode="aspectFit" style="height: 180px" />
+                            </view>
+                        </block>
                     </block>
-                    <block wx:if="{{content.img}}">
-                        <image src="{{content.img}}"></image>
-                    </block>
-                </block>
-            </view>
-            <view class="tab-content-main">
-                <view class="info-text">{{articleInfo.articleSumary}}</view>
+                </view>
             </view>
         </view>
-
     </view>
 </view>
